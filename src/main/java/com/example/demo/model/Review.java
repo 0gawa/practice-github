@@ -1,8 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Review {
@@ -11,17 +13,26 @@ public class Review {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Integer starRating; // feature branchでは 'int rating' でした
+  @Min(1)
+  @Max(5)
+  private int rating;
 
-  @Size(min = 10, message = "感想は10文字以上で入力してください")
-  private String reviewText; // feature branchでは 'comment' でした
+  @NotBlank(message = "Comment cannot be blank")
+  private String comment;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "book_id")
-  @JsonBackReference
+  @JsonIgnore
   private Book book;
 
+  // Default constructor for JPA
   public Review() {
+  }
+
+  public Review(int rating, String comment, Book book) {
+    this.rating = rating;
+    this.comment = comment;
+    this.book = book;
   }
 
   // Getters and Setters
@@ -33,20 +44,20 @@ public class Review {
     this.id = id;
   }
 
-  public Integer getStarRating() {
-    return starRating;
+  public int getRating() {
+    return rating;
   }
 
-  public void setStarRating(Integer starRating) {
-    this.starRating = starRating;
+  public void setRating(int rating) {
+    this.rating = rating;
   }
 
-  public String getReviewText() {
-    return reviewText;
+  public String getComment() {
+    return comment;
   }
 
-  public void setReviewText(String reviewText) {
-    this.reviewText = reviewText;
+  public void setComment(String comment) {
+    this.comment = comment;
   }
 
   public Book getBook() {

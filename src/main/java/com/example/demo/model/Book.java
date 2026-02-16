@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +12,10 @@ public class Book {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @NotEmpty(message = "本のタイトルを入力してください")
+  @NotBlank(message = "本のタイトルを入力してください")
   private String title;
 
-  @NotEmpty(message = "著者の名前を入力してください")
+  @NotBlank(message = "著者の名前を入力してください")
   private String authorName; // feature branchでは 'author' でした
 
   @Column(name = "book_summary", length = 2000)
@@ -66,5 +66,10 @@ public class Book {
 
   public void setReviews(List<Review> reviews) {
     this.reviews = reviews;
+  }
+
+  public void addReview(Review review) {
+    reviews.add(review);
+    review.setBook(this);
   }
 }
