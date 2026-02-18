@@ -59,4 +59,11 @@ public class BookViewController {
     bookRepository.save(book);
     return "redirect:/books";
   }
+
+  @PostMapping("/delete/{id}")
+  public String deleteBook(@PathVariable Long id) {
+    System.out.println("Deleting book with ID: " + id);
+    bookRepository.deleteById(id);
+    return "redirect:/books";
+  }
 }
