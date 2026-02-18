@@ -72,6 +72,15 @@
             <div class="book-title" th:text="${book.title}">Book Title</div>
             <div class="book-author" th:text="${book.authorName}">Author Name</div>
             <p th:text="${book.summary}">Description</p>
+            <a th:href="@{/books/edit/{id}(id=${book.id})}"
+                style="color: #27ae60; text-decoration: none; font-size: 0.9rem;">編集する</a>
+            <form th:action="@{/books/delete/{id}(id=${book.id})}" method="post"
+                style="margin-top: 10px; display: inline-block;">
+                <button type="submit" onclick="return confirm('本当に削除しますか？');"
+                    style="background-color: #fce4e4; border: 1px solid #e74c3c; color: #e74c3c; cursor: pointer; padding: 5px 10px; border-radius: 4px; font-size: 0.85rem;">
+                    削除する
+                </button>
+            </form>
         </div>
         <div th:if="${#lists.isEmpty(books)}">
             <p>本がまだ登録されていません。</p>
