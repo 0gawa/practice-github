@@ -72,10 +72,14 @@
             <div class="book-title" th:text="${book.title}">Book Title</div>
             <div class="book-author" th:text="${book.authorName}">Author Name</div>
             <p th:text="${book.summary}">Description</p>
+            <a th:href="@{/books/edit/{id}(id=${book.id})}"
+                style="color: #27ae60; text-decoration: none; font-size: 0.9rem;">編集する</a>
             <form th:action="@{/books/delete/{id}(id=${book.id})}" method="post"
                 onsubmit="return confirm('本当に削除しますか？');" style="margin-top: 10px;">
                 <button type="submit"
-                    style="background: none; border: none; color: #e74c3c; cursor: pointer; padding: 0; font-size: 0.9rem;">削除する</button>
+                    style="background: none; border: none; color: #e74c3c; cursor: pointer; padding: 0; font-size: 0.9rem;">
+                    削除する
+                </button>
             </form>
         </div>
         <div th:if="${#lists.isEmpty(books)}">

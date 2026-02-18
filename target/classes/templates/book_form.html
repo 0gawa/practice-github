@@ -84,8 +84,9 @@
 
 <body>
   <div class="container">
-    <h1>新しい本を登録</h1>
-    <form th:action="@{/books/new}" th:object="${book}" method="post">
+    <h1 th:text="${book.id == null} ? '新しい本を登録' : '本の情報を編集'">新しい本を登録</h1>
+    <form th:action="${book.id == null} ? @{/books/new} : @{/books/update/{id}(id=${book.id})}" th:object="${book}"
+      method="post">
       <div class="form-group">
         <label for="title">タイトル</label>
         <input type="text" id="title" th:field="*{title}" placeholder="例: スプリングブート入門">
@@ -93,14 +94,14 @@
       </div>
       <div class="form-group">
         <label for="author">著者</label>
-        <input type="text" id="author" th:field="*{author}" placeholder="例: 田中 太郎">
-        <div class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</div>
+        <input type="text" id="author" th:field="*{authorName}" placeholder="例: 田中 太郎">
+        <div class="error" th:if="${#fields.hasErrors('authorName')}" th:errors="*{authorName}">Author Error</div>
       </div>
       <div class="form-group">
         <label for="description">説明</label>
-        <textarea id="description" th:field="*{description}" placeholder="本の内容について簡単に記載してください"></textarea>
+        <textarea id="description" th:field="*{summary}" placeholder="本の内容について簡単に記載してください"></textarea>
       </div>
-      <button type="submit" class="btn">登録する</button>
+      <button type="submit" class="btn" th:text="${book.id == null} ? '登録する' : '更新する'">登録する</button>
     </form>
     <a href="/books" class="back-link">← 一覧に戻る</a>
   </div>
