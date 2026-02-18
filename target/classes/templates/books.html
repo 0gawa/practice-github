@@ -1,27 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Book List - Book Platform</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        .book-item { border-bottom: 1px solid #eee; padding: 15px 0; }
-        .book-item:last-child { border-bottom: none; }
-        .book-title { font-size: 1.25rem; font-weight: bold; color: #3498db; }
-        .book-author { font-style: italic; color: #7f8c8d; }
-        .btn { display: inline-block; background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-top: 20px; transition: background 0.3s; }
-        .btn:hover { background: #2980b9; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .book-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .book-item:last-child {
+            border-bottom: none;
+        }
+
+        .book-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .book-author {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>登録されている本の一覧</h1>
         <div th:each="book : ${books}" class="book-item">
             <div class="book-title" th:text="${book.title}">Book Title</div>
-            <div class="book-author" th:text="${book.author}">Author Name</div>
-            <p th:text="${book.description}">Description</p>
+            <div class="book-author" th:text="${book.authorName}">Author Name</div>
+            <p th:text="${book.summary}">Description</p>
+            <form th:action="@{/books/delete/{id}(id=${book.id})}" method="post"
+                onsubmit="return confirm('本当に削除しますか？');" style="margin-top: 10px;">
+                <button type="submit"
+                    style="background: none; border: none; color: #e74c3c; cursor: pointer; padding: 0; font-size: 0.9rem;">削除する</button>
+            </form>
         </div>
         <div th:if="${#lists.isEmpty(books)}">
             <p>本がまだ登録されていません。</p>
@@ -29,4 +84,5 @@
         <a href="/books/new" class="btn">新しい本を登録する</a>
     </div>
 </body>
+
 </html>
